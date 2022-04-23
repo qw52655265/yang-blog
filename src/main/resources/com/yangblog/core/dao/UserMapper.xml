@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangblog.core.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.yangblog.core.domain.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="account" jdbcType="VARCHAR" property="account"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="gender" jdbcType="TINYINT" property="gender"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="token" jdbcType="VARCHAR" property="token"/>
+    </resultMap>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.yangblog.core.domain.User"
+            useGeneratedKeys="true">
+        insert into yang_blog.user (account, `password`, `name`,
+                                    birthday, mobile, gender,
+                                    email, address, token)
+        values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+                #{birthday,jdbcType=TIMESTAMP}, #{mobile,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT},
+                #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.yangblog.core.domain.User">
+        <!--@mbg.generated-->
+        update yang_blog.user
+        set account    = #{account,jdbcType=VARCHAR},
+            `password` = #{password,jdbcType=VARCHAR},
+            `name`     = #{name,jdbcType=VARCHAR},
+            birthday   = #{birthday,jdbcType=TIMESTAMP},
+            mobile     = #{mobile,jdbcType=VARCHAR},
+            gender     = #{gender,jdbcType=TINYINT},
+            email      = #{email,jdbcType=VARCHAR},
+            address    = #{address,jdbcType=VARCHAR},
+            token      = #{token,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select *
+        from `user`
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from yang_blog.user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT *
+        FROM yang_blog.user
+    </select>
+    <select id="selectByToken" resultMap="BaseResultMap">
+        SELECT *
+        FROM yang_blog.user
+        WHERE token = #{token,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByAccount" resultMap="BaseResultMap">
+        SELECT *
+        FROM yang_blog.user
+        WHERE account = #{account,jdbcType=VARCHAR}
+    </select>
+    <update id="updateToken">
+        UPDATE yang_blog.user
+        SET token = #{token,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

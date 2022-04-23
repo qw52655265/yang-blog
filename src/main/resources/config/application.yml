@@ -1,0 +1,34 @@
+server:
+  servlet:
+    context-path: /yang-blog
+spring:
+  application:
+    name: yang-blog
+  profiles:
+    active: local
+  servlet:
+    multipart:
+      max-file-size: 15728640
+      max-request-size: 157286400
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimumIdle: 1
+      maximumPoolSize: 50
+  mvc:
+    pathmatch:
+      use-suffix-pattern: true
+    jackson:
+      default-property-inclusion: non_null
+      serialization:
+        write_dates_as_timestamps: true
+        # https://stackoverflow.com/questions/37999762/efficient-way-to-have-jackson-serialize-java-8-instant-as-epoch-milliseconds
+        write_date_timestamps_as_nanoseconds: false
+      deserialization:
+        # https://stackoverflow.com/questions/45762857/deserialize-millisecond-timestamp-to-java-time-instant
+        read_date_timestamps_as_nanoseconds: false
+mybatis:
+  configuration:
+    jdbc-type-for-null: null
+    map-underscore-to-camel-case: true
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler

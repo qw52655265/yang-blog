@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%highlight(%d{HH:mm:ss.SSS} %level) %green([%thread]) %cyan(%logger) - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="com.bizranking.Application" level="DEBUG"/>
+    <logger name="com.bizranking.cache.service.CacheService" level="DEBUG"/>
+    <logger name="com.bizranking.core.dao" level="DEBUG" />
+    <root level="info">
+        <appender-ref ref="console"/>
+    </root>
+</configuration>

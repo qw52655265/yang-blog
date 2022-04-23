@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+    <property name="LOG_HOME" value="/log"/>
+    <property name="LOG_PATTERN"
+              value="[%date] %highlight([%level]) [%thread] [%logger{50} %file:%line] %msg%n"/>
+
+    <springProfile name="local,neo">
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <root level="info">
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="test,docker">
+        <appender name="infoLevelAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_HOME}/all.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${LOG_HOME}/all.%d{yyyy-MM-dd}.log</FileNamePattern>
+                <MaxHistory>5</MaxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="warnLevelAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_HOME}/error.log</file>
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>WARN</level>
+            </filter>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${LOG_HOME}/error.%d{yyyy-MM-dd}.log</FileNamePattern>
+                <MaxHistory>5</MaxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="attentionInfo" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_HOME}/attention/attention.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${LOG_HOME}/attention.%d{yyyy-MM-dd}.log</FileNamePattern>
+                <MaxHistory>30</MaxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <root level="info">
+            <appender-ref ref="infoLevelAppender"/>
+            <appender-ref ref="warnLevelAppender"/>
+        </root>
+        <logger name="attention" level="info">
+            <appender-ref ref="attentionInfo"/>
+        </logger>
+        <!--todo jason: 阻止TaobaoLogger的打印，在自己的代码中决定是否需要打印-->
+        <!--        <logger name="topsdk" level="off"/>-->
+    </springProfile>
+
+    <springProfile name="production">
+        <appender name="all" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_HOME}/all.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${LOG_HOME}/all.%d{yyyy-MM-dd}.log</FileNamePattern>
+                <MaxHistory>5</MaxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_HOME}/error.log</file>
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>WARN</level>
+            </filter>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${LOG_HOME}/error.%d{yyyy-MM-dd}.log</FileNamePattern>
+                <MaxHistory>1</MaxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="attentionInfo" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_HOME}/attention/attention.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>${LOG_HOME}/attention.%d{yyyy-MM-dd}.log</FileNamePattern>
+                <MaxHistory>30</MaxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <!--自定义特别关注日志-->
+        <logger name="attention" level="info">
+            <appender-ref ref="attentionInfo"/>
+        </logger>
+        <root level="info">
+            <appender-ref ref="all"/>
+            <appender-ref ref="error"/>
+        </root>
+    </springProfile>
+</configuration>

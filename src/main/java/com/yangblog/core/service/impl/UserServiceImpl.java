@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
                 .gender(user.getGender())
                 .name(user.getName())
                 .email(user.getEmail())
+                .mobile(user.getMobile())
                 .token(RandomStringUtils.randomAlphabetic(24))
                 .build();
         userMapper.updateToken(user.getId(), userView.getToken());

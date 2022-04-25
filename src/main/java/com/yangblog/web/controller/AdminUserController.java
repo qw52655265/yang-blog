@@ -23,9 +23,9 @@ public class AdminUserController extends WebappBaseApiController {
 
     @PostMapping("login")
     public WebAppApiResponse login(@RequestBody JsonNode node) {
-        String mobile = getRequiredTextField(node, "mobile");
+        String account = getRequiredTextField(node, "account");
         String password = getRequiredTextField(node, "password");
-        Map<String, Object> map = userService.adminLogin(mobile, password);
+        Map<String, Object> map = userService.adminLogin(account, password);
         return new WebAppApiResponse(map);
     }
 

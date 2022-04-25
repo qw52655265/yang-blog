@@ -26,9 +26,9 @@ public class AdminTokenInterceptor implements HandlerInterceptor {
         log.debug("url={}, token={}", request.getRequestURI(), token);
 
         if (!StringUtils.hasText(token)) {
-            Integer editorId = userService.touch(token);
-            if (Objects.nonNull(editorId)) {
-                request.setAttribute("userId", editorId.toString());
+            Integer userId = userService.touch(token);
+            if (Objects.nonNull(userId)) {
+                request.setAttribute("userId", userId.toString());
                 return true;
             }
         }

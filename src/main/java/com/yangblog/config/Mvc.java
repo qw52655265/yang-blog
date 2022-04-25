@@ -19,7 +19,7 @@ public class Mvc implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(adminTokenInterceptor())
                 .addPathPatterns("/admin/**")
-                .excludePathPatterns("/admin/login");
+                .excludePathPatterns("/admin/user/login");
     }
 
     @Override

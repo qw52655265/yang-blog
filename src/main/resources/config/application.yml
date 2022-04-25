@@ -17,7 +17,7 @@ spring:
       maximumPoolSize: 50
   mvc:
     pathmatch:
-      use-suffix-pattern: true
+      use-suffix-pattern: false
     jackson:
       default-property-inclusion: non_null
       serialization:

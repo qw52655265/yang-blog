@@ -6,6 +6,6 @@ public interface UserService {
 
     Integer touch(String token);
 
-    Map<String, Object> adminLogin(String mobile, String password);
+    Map<String, Object> adminLogin(String account, String password);
 
 }

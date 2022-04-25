@@ -15,7 +15,7 @@
     </resultMap>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.yangblog.core.domain.User"
             useGeneratedKeys="true">
-        insert into yang_blog.user (account, `password`, `name`,
+        insert into `user` (account, `password`, `name`,
                                     birthday, mobile, gender,
                                     email, address, token)
         values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
@@ -24,7 +24,7 @@
     </insert>
     <update id="updateByPrimaryKey" parameterType="com.yangblog.core.domain.User">
         <!--@mbg.generated-->
-        update yang_blog.user
+        update `user`
         set account    = #{account,jdbcType=VARCHAR},
             `password` = #{password,jdbcType=VARCHAR},
             `name`     = #{name,jdbcType=VARCHAR},
@@ -43,25 +43,25 @@
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
-        from yang_blog.user
+        from `user`
         where id = #{id,jdbcType=INTEGER}
     </delete>
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT *
-        FROM yang_blog.user
+        FROM `user`
     </select>
     <select id="selectByToken" resultMap="BaseResultMap">
         SELECT *
-        FROM yang_blog.user
+        FROM `user`
         WHERE token = #{token,jdbcType=VARCHAR}
     </select>
     <select id="selectByAccount" resultMap="BaseResultMap">
         SELECT *
-        FROM yang_blog.user
+        FROM `user`
         WHERE account = #{account,jdbcType=VARCHAR}
     </select>
     <update id="updateToken">
-        UPDATE yang_blog.user
+        UPDATE `user`
         SET token = #{token,jdbcType=VARCHAR}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
